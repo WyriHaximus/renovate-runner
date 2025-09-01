@@ -54,7 +54,6 @@ jobs:
           RENOVATE_INTERNAL_CHECKS_FILTER: strict
           RENOVATE_PLATFORM: github
           RENOVATE_PLATFORM_COMMIT: true
-          RENOVATE_ONBOARDING: false
           LOG_LEVEL: info
 #          LOG_LEVEL: debug
 #          LOG_FORMAT: json
