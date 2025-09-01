@@ -51,7 +51,6 @@ jobs:
           RENOVATE_DRY_RUN: "null"
           RENOVATE_IGNORE_PLUGINS: false
           RENOVATE_IGNORE_SCRIPTS: false
-          RENOVATE_INTERNAL_CHECKS_FILTER: strict
           LOG_LEVEL: info
 #          LOG_LEVEL: debug
 #          LOG_FORMAT: json
