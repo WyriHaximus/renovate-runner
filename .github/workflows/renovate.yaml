@@ -52,7 +52,6 @@ jobs:
           RENOVATE_IGNORE_PLUGINS: false
           RENOVATE_IGNORE_SCRIPTS: false
           RENOVATE_INTERNAL_CHECKS_FILTER: strict
-          RENOVATE_PLATFORM: github
           LOG_LEVEL: info
 #          LOG_LEVEL: debug
 #          LOG_FORMAT: json
