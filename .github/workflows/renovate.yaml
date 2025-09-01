@@ -53,7 +53,6 @@ jobs:
           RENOVATE_IGNORE_SCRIPTS: false
           RENOVATE_INTERNAL_CHECKS_FILTER: strict
           RENOVATE_PLATFORM: github
-          RENOVATE_PLATFORM_COMMIT: true
           LOG_LEVEL: info
 #          LOG_LEVEL: debug
 #          LOG_FORMAT: json
