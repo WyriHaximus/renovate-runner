@@ -47,7 +47,7 @@ jobs:
           RENOVATE_AUTODISCOVER_FILTER: ${{ secrets.RENOVATE_AUTODISCOVER_FILTER }}
           RENOVATE_BINARY_SOURCE: docker
           RENOVATE_POST_UPGRADE_TASKS: "{\"commands\": [\"git add\"], \"fileFilters\": [\"**/**\"], \"executionMode\": \"update\"}"
-          RENOVATE_DOCKER_CLI_OPTIONS: "-e=COMPOSER_IGNORE_PLATFORM_REQS=1"
+          RENOVATE_DOCKER_CLI_OPTIONS: "-t -e=COMPOSER_IGNORE_PLATFORM_REQS=1"
           RENOVATE_DRY_RUN: "null"
           RENOVATE_IGNORE_PLUGINS: false
           RENOVATE_IGNORE_SCRIPTS: false
