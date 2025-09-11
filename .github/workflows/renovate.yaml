@@ -52,6 +52,9 @@ jobs:
           RENOVATE_DRY_RUN: "null"
           RENOVATE_IGNORE_PLUGINS: false
           RENOVATE_IGNORE_SCRIPTS: false
+          RENOVATE_ONBOARDING_CONFIG: "{\"$schema\":\"https://docs.renovatebot.com/renovate-schema.json\",\"extends\":[\"github>WyriHaximus/renovate-config:php-package\"]}"
+          RENOVATE_ONBOARDING_CONFIG_FILE_NAME: ".github/renovate.json"
+          RENOVATE_ONBOARDING_REBASE_CHECKBOX: "true"
           LOG_LEVEL: info
 #          LOG_LEVEL: debug
 #          LOG_FORMAT: json
