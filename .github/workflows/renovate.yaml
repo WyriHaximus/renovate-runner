@@ -2,8 +2,8 @@ name: Renovate
 
 on:
   schedule:
-    - cron: "0 6-22/2 * * 1-5"
-    - cron: "0 12-23/2 * * 0,6"
+    - cron: "0 6-22 * * 1-5"
+    - cron: "0 12-23 * * 0,6"
   push:
     branches:
       - 'main'
@@ -16,9 +16,70 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  fetch-repositories:
+    name: Fetch Repositories
+    runs-on: ubuntu-latest
+    outputs:
+      groups: ${{ steps.groups.outputs.result }}
+    steps:
+      - name: Generate App Token for GraphQL
+        uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
+        id: app-token
+        with:
+          app-id: ${{ secrets.RENOVATE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RENOVATE_BOT_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+      - uses: actions/github-script@v8
+        id: groups
+        env:
+          COUNT: ${{ steps.repositories.outputs.output }}
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const query = `query myPublicRepos($queryString: String!, $after: String) {
+              search(query: $queryString, type: REPOSITORY, first: 13, after: $after) {
+                repositoryCount
+                edges {
+                  node {
+                    ... on Repository {
+                      name
+                    }
+                  }
+                }
+                pageInfo {
+                  endCursor
+                  startCursor
+                  hasNextPage
+                  hasPreviousPage
+                }
+              }
+            }`;
+            let groups = [];
+            let after = null;
+            let tick = true;
+            do {
+              let repositories = [];
+              const result = await github.graphql(query, {
+                queryString: "owner:WyriHaximus is:public fork:false archived:false sort:updated-desc",
+                after: after,
+              });
+              after = result.search.pageInfo.endCursor;
+              tick = result.search.pageInfo.hasNextPage;
+              for (const edge of result.search.edges) {
+                repositories.push(edge.node.name);
+              }
+              groups.push(repositories.join(","));
+            } while (tick);
+            return groups;
   renovate:
     name: Renovate
     runs-on: ubuntu-latest
+    needs:
+      - fetch-repositories
+    strategy:
+      fail-fast: false
+      matrix:
+        repositories: ${{ fromJson(needs.fetch-repositories.outputs.groups) }}
     steps:
       - name: Generate App Token for Renovate
         uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
@@ -27,8 +88,8 @@ jobs:
           app-id: ${{ secrets.RENOVATE_BOT_CLIENT_ID }}
           private-key: ${{ secrets.RENOVATE_BOT_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-          repositories: ${{ secrets.RENOVATE_REPOSITORIES }}
+          repositories: ${{ matrix.repositories }}
       - name: Renovate
-        uses: WyriHaximus/github-action-renovatebot@3f7adcad17b87e524495f536aa80c7cfe951712e # v0.3.7
+        uses: WyriHaximus/github-action-renovatebot@093afe3fd8c7f39c5dd83103ec654693e6f7d2fa # v0.3.5
         with:
           renovateAppToken: ${{ steps.app-token.outputs.token }}
