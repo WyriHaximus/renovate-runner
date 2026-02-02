@@ -90,6 +90,6 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: ${{ matrix.repositories }}
       - name: Renovate
-        uses: WyriHaximus/github-action-renovatebot@v0.10.0
+        uses: WyriHaximus/github-action-renovatebot@v0.11.0
         with:
           renovateAppToken: ${{ steps.app-token.outputs.token }}
