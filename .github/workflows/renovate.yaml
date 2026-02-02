@@ -93,3 +93,4 @@ jobs:
         uses: WyriHaximus/github-action-renovatebot@v0.11.0
         with:
           renovateAppToken: ${{ steps.app-token.outputs.token }}
+          logLevel: debug # Enables detailed JSON logging
