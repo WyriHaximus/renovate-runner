@@ -90,7 +90,7 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: ${{ matrix.repositories }}
       - name: Renovate
-        uses: WyriHaximus/github-action-renovatebot@eadd68e9f9a5a6fc7caae5c39ffe15570f4a176a # v0.14.0
+        uses: WyriHaximus/github-action-renovatebot@add-all-directories-ass-git-safe-directories
         with:
           renovateAppToken: ${{ steps.app-token.outputs.token }}
           logLevel: debug # Enables detailed JSON logging
