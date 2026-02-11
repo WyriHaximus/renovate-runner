@@ -90,7 +90,7 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: ${{ matrix.repositories }}
       - name: Renovate
-        uses: WyriHaximus/github-action-renovatebot@switch-binary-source-to-install
+        uses: WyriHaximus/github-action-renovatebot@switch-binary-source-to-install-with-make-oiou
         with:
           renovateAppToken: ${{ steps.app-token.outputs.token }}
           logLevel: debug # Enables detailed JSON logging
