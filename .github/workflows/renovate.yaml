@@ -10,6 +10,7 @@ on:
   issues:
     types:
       - edited
+  workflow_dispatch:
 
 concurrency:
   group: 'renovate'
